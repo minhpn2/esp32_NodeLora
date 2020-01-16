@@ -41,6 +41,9 @@ public:
     /* Configure wifi softap mode */
     void wifi_init_softap(void);
 
+    /* Initilize wifi*/
+    void startWifiSoftAP(void);
+
 private:
     const char *TAG = "wifi softAP";
 };

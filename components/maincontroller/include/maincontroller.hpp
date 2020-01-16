@@ -16,7 +16,9 @@ public:
 
     void start();
 
+    static void taskWifiStart(void* pvParam);
+    static void taskTest(void* pvParam);
+
 private:
     wifiConfig*  m_wifiConfig;
-
 };

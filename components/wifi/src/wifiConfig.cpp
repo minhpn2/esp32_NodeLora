@@ -2,18 +2,7 @@
 
 wifiConfig::wifiConfig()
 {
-    //Initialize NVS
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-      ESP_ERROR_CHECK(nvs_flash_erase());
-      ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-
-    ESP_LOGI(this->TAG, "ESP_WIFI_MODE_AP");
-
-    printf(this->TAG);
-    this->wifi_init_softap();    
+   
 }
 
 wifiConfig::~wifiConfig()
@@ -27,7 +16,7 @@ void wifiConfig::wifi_event_handler(void* event_handler_arg,
                                     int32_t event_id, 
                                     void* event_data)
 {
-    // wifiConfig* m_wifiConfig = (wifiConfig*)event_handler_arg;
+    wifiConfig* m_wifiConfig = (wifiConfig*)event_handler_arg;
 
     if(event_id == WIFI_EVENT_AP_STACONNECTED)
     {
@@ -70,6 +59,21 @@ void wifiConfig::wifi_init_softap(void)
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_setting));
     ESP_ERROR_CHECK(esp_wifi_start());
 
-    ESP_LOGI(this->TAG, "wifi_init_softap finished. SSID:%s password:%s",
-             ESP_WIFI_SSID, ESP_WIFI_PASS);
+    // ESP_LOGI(this->TAG, "wifi_init_softap finished. SSID:%s password:%s",
+    //          ESP_WIFI_SSID, ESP_WIFI_PASS);
+}
+
+void wifiConfig::startWifiSoftAP(void)
+{
+    //Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      ESP_ERROR_CHECK(nvs_flash_erase());
+      ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    // ESP_LOGI(this->TAG, "ESP_WIFI_MODE_AP");
+
+    this->wifi_init_softap(); 
 }
